@@ -1354,7 +1354,7 @@ export abstract class BaseSaveFileAction extends BaseActionWithErrorReporting {
 			if (this.isSaveAs() || source.scheme === 'untitled') {
 				let encodingOfSource: string;
 				if (source.scheme === 'untitled') {
-					encodingOfSource = this.untitledEditorService.get(source).getEncoding();
+					encodingOfSource = this.untitledEditorService.get(source).getEncoding(); // TODO@Ben
 				} else if (source.scheme === 'file') {
 					const textModel = this.textFileService.models.get(source);
 					encodingOfSource = textModel && textModel.getEncoding(); // text model can be null e.g. if this is a binary file!
@@ -1496,8 +1496,8 @@ export abstract class BaseSaveAllAction extends BaseActionWithErrorReporting {
 		const mapUntitledToProperties: { [resource: string]: { encoding: string; indexInGroups: number[]; activeInGroups: boolean[] } } = Object.create(null);
 		this.textFileService.getDirty()
 			.filter(r => r.scheme === 'untitled')			// All untitled resources
-			.map(r => this.untitledEditorService.get(r))	// Mapped to their inputs
-			.filter(input => !!input)								// If possible :)
+			.map(r => this.untitledEditorService.get(r))	// Mapped to their inputs TODO@Ben
+			.filter(input => !!input)						// If possible :)
 			.forEach(input => {
 				mapUntitledToProperties[input.getResource().toString()] = {
 					encoding: input.getEncoding(),
